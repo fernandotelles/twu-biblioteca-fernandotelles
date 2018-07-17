@@ -9,46 +9,50 @@ import java.io.PrintStream;
 import java.util.Arrays;
 import java.util.Collections;
 
-public class AvailableBooksTest {
+public class BooksTest {
     @Test
     public void testItPrintsTheAvailableBookTitleWhenThereIsOnlyOneAvailableBook() {
-        String expectedTitles = "fernando";
+        Book expectedBook = new Book("fernando", "fernando",1990);
 
-        Books books = new Books(Collections.singletonList(expectedTitles));
+        Books books = new Books(Collections.singletonList(expectedBook));
 
         final StringBuilder actualTitles = new StringBuilder();
 
-        books.printTitles(new PrintStream(new OutputStream() {
+        books.printBooks(new PrintStream(new OutputStream() {
             @Override
             public void write(int b) {
                 actualTitles.append((char)b);
             }
         }));
 
-        assertEquals(expectedTitles, actualTitles.toString());
+        assertEquals(expectedBook, actualTitles.toString());
     }
 
     @Test
     public void testItPrintsTheAvailableBookTitlesWhenThereAreMultipleAvailableBooks() {
-        String aBook = "fernando";
-        String anotherBook = "crepusculo";
+        Book aBook = new Book("fernando", "fernando",1990);
+        Book anotherBook = new Book("crespusculo", "fernando",1991);
         Books books = new Books(Arrays.asList(aBook, anotherBook));
 
         final StringBuilder actualTitles = new StringBuilder();
 
-        books.printTitles(new PrintStream(new OutputStream() {
+        books.printBooks(new PrintStream(new OutputStream() {
             @Override
             public void write(int b) {
                 actualTitles.append((char)b);
             }
         }));
 
-        assertEquals(aBook + '\n' + anotherBook, actualTitles.toString());
+        assertEquals(aBook.getName() + '\n' + anotherBook.getName(), actualTitles.toString());
     }
 
     @Test
     public void testIfBookListContainsSixBooks() {
-        Books books = new Books(Arrays.asList("a","b", "c", "d", "e","f"));
-        assertEquals(6, books.BOOK_TITLES.size());
+        Books books = new Books(Arrays.asList(new Book("fernando", "fernando",1990),
+                new Book("fernando", "fernando",1990),
+                new Book("fernando", "fernando",1990),
+                new Book("fernando", "fernando",1990)));
+
+        assertEquals(4, books.BOOK_TITLES.size());
     }
 }
